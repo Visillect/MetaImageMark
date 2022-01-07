@@ -7,5 +7,4 @@ AllowShortLambdasOnASingleLine: Empty
 DerivePointerAlignment: false
 PointerAlignment: Left
 IncludeBlocks: Preserve
-SortIncludes: true
-ColumnLimit: 100
+SortIncludes: CaseSensitive
