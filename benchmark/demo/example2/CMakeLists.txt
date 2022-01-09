@@ -1,2 +1,0 @@
-add_executable(bench_example2 main.cpp)
-target_link_libraries(bench_example2 PRIVATE benchmark_tools)
