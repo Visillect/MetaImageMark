@@ -9,4 +9,4 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include(BuildTypes)
 
 add_subdirectory(third_party)
-add_subdirectory(meta_base)
+add_subdirectory(meta_benchmark)

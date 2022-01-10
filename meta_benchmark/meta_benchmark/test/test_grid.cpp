@@ -3,9 +3,9 @@
 #include <vector>
 
 #include <gtest/gtest.h>
-#include <meta_base.h>
+#include <meta_benchmark.h>
 
-using meta_mark::GenerateGrid;
+using meta_benchmark::internal::GenerateGrid;
 
 TEST(OneParamGrid, INT) {
   std::vector<int> res;
