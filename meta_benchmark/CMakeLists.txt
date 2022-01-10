@@ -4,7 +4,9 @@ project(meta_image_mark)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(third_party)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-#add_subdirectory(libraries)
+include(BuildTypes)
+
+add_subdirectory(third_party)
 add_subdirectory(meta_base)

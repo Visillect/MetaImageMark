@@ -6,72 +6,66 @@
 
 #include <benchmark/benchmark.h>
 
-namespace std {
-
-std::string to_string(std::string string) {  // NOLINT
-  return string;
-}
-
-}  // namespace std
-
 namespace meta_mark {
 
 namespace internal {
 
 template <class KVContainer>
-std::string GenerateMarkName(const KVContainer& kv_description) {
+std::string MakeBenchmarkName(const KVContainer& kv_description) {
   std::string result;
-
   for (const auto& [key, value] : kv_description) {
-    result += std::to_string(key);
-    result += ':';
-    result += std::to_string(value);
-    result += '/';
+    result += key + ":" + value + "/";
   }
+  result.pop_back();
 
   return result;
 }
 
 }  // namespace internal
 
-template <class KVContainer, class Generator, class Operation,
-          class ErrorDescription>
+template <class KVContainer, class Generator, class Operation>
 void AddMetaBenchmark(const KVContainer& kv_description, Generator&& generator,
-                      Operation&& operation,
-                      ErrorDescription&& error_to_string) {
+                      Operation&& operation, double min_time = 0.02) {
   auto bm_function = [generator = std::forward<Generator>(generator),
-                      operation = std::forward<Operation>(operation),
-                      error_to_string = std::forward<ErrorDescription>(
-                          error_to_string)](benchmark::State& state) mutable {
-    auto meta_image = generator();
+                      operation = std::forward<Operation>(operation)](
+                         benchmark::State& state) mutable {
+    auto meta_object = generator();
     try {
       for (auto _ : state) {
-        operation(meta_image);
+        operation(meta_object);
       }
     } catch (const std::exception& error) {
-      state.SkipWithError(error_to_string(error).c_str());
+      state.SkipWithError(error.what());
     }
   };
 
   benchmark::RegisterBenchmark(
-      internal::GenerateMarkName(kv_description).c_str(), bm_function);
+      internal::MakeBenchmarkName(kv_description).c_str(), bm_function)
+      ->MinTime(min_time);
 }
 
-template <class Callback, class Range>
-void GenerateGrid(Callback callback, const Range& range) {
-  for (const auto& value : range) {
+void Run(int& argc, char* argv[]) {
+  benchmark::Initialize(&argc, argv);
+  benchmark::RunSpecifiedBenchmarks();
+
+  benchmark::Shutdown();
+}
+
+template <class Callback, class List>
+void GenerateGrid(Callback callback, const List& list) {
+  for (const auto& value : list) {
     callback(value);
   }
 }
 
 template <class Callback, class T>
-void GenerateGrid(Callback callback, const std::initializer_list<T>& range) {
-  GenerateGrid<Callback, std::initializer_list<T>>(callback, range);
+void GenerateGrid(Callback callback, const std::initializer_list<T>& list) {
+  GenerateGrid<Callback, std::initializer_list<T>>(callback, list);
 }
 
-template <class Callback, class Range, class... Tail>
-void GenerateGrid(Callback callback, const Range& range, const Tail&... tail) {
-  for (const auto& value : range) {
+template <class Callback, class List, class... Tail>
+void GenerateGrid(Callback callback, const List& list, const Tail&... tail) {
+  for (const auto& value : list) {
     GenerateGrid(
         [&callback, &value](const auto&... values) {
           callback(value, values...);
@@ -81,10 +75,10 @@ void GenerateGrid(Callback callback, const Range& range, const Tail&... tail) {
 }
 
 template <class Callback, class T, class... Tail>
-void GenerateGrid(Callback callback, const std::initializer_list<T>& range,
+void GenerateGrid(Callback callback, const std::initializer_list<T>& list,
                   const std::initializer_list<Tail>&... tail) {
   GenerateGrid<Callback, std::initializer_list<T>,
-               std::initializer_list<Tail...>>(callback, range, tail...);
+               std::initializer_list<Tail...>>(callback, list, tail...);
 }
 
 }  // namespace meta_mark
