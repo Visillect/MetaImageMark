@@ -1,3 +1,7 @@
+#include <initializer_list>
+#include <utility>
+#include <vector>
+
 #include <gtest/gtest.h>
 #include <meta_base.h>
 
@@ -25,5 +29,18 @@ TEST(TwoParamGrid, INT_STR) {
 
   std::vector<std::pair<int, std::string>> exp{
       {1, "ABC"}, {1, "CBA"}, {2, "ABC"}, {2, "CBA"}, {3, "ABC"}, {3, "CBA"}};
+  ASSERT_EQ(res, exp);
+}
+
+TEST(ContainerType, Vectors) {
+  std::vector<std::pair<int, int>> res;
+  GenerateGrid(
+      [&](int v1, int v2) {
+        res.emplace_back(v1, v2);
+      },
+      std::vector<int>{1, 2, 3}, std::vector<int>{4, 5});
+
+  std::vector<std::pair<int, int>> exp{{1, 4}, {1, 5}, {2, 4},
+                                       {2, 5}, {3, 4}, {3, 5}};
   ASSERT_EQ(res, exp);
 }
