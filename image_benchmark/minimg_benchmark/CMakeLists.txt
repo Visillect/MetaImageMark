@@ -1,6 +1,6 @@
 function(ADD_MINIMG_LIBRARY NAME TARGET)
     set(${NAME}_INCLUDE_DIR "" CACHE PATH "Path to MinImg ${TARGET} include \
-    directory")
+        directory")
     set(${NAME}_LIBRARY "" CACHE PATH "Path to MinImg ${TARGET} dynamic library")
 
     if (NOT (EXISTS ${${NAME}_INCLUDE_DIR}) OR NOT (EXISTS ${${NAME}_LIBRARY}))

@@ -67,7 +67,7 @@ void BinaryMultiplication() {
                                    kOneChannel, kImageSide, kImageSide);
 }
 
-// Doesn't work. Does not work. Most likely division by zero.
+// Doesn't work. Most likely division by zero.
 void BinaryDivision() {
   auto operation = [](ImageTriplet& triplet) {
     auto& [output, first, second] = triplet;

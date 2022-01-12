@@ -109,4 +109,4 @@ constexpr std::array<MinTyp, 10> kImageTypes{
     TYP_INT8,   TYP_UINT8, TYP_INT16,  TYP_UINT16, TYP_INT32,
     TYP_UINT32, TYP_INT64, TYP_UINT64, TYP_REAL32, TYP_REAL64};
 constexpr std::array<int, 1> kOneChannel{1};
-constexpr std::array<int, 2> kTwoChannels{1};
+constexpr std::array<int, 2> kTwoChannels{1, 3};
