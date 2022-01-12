@@ -6,7 +6,7 @@
 
 #include <benchmark/benchmark.h>
 
-namespace meta_benchmark {
+namespace grid_benchmark {
 
 namespace internal {
 
@@ -28,11 +28,7 @@ void GenerateGrid(Callback callback, const List& list) {
   }
 }
 
-template <class Callback, class T>
-void GenerateGrid(Callback callback, const std::initializer_list<T>& list) {
-  GenerateGrid<Callback, std::initializer_list<T>>(callback, list);
-}
-
+// TODO: add braced-init-list support
 template <class Callback, class List, class... Tail>
 void GenerateGrid(Callback callback, const List& list, const Tail&... tail) {
   for (const auto& value : list) {
@@ -42,13 +38,6 @@ void GenerateGrid(Callback callback, const List& list, const Tail&... tail) {
         },
         tail...);
   }
-}
-
-template <class Callback, class T, class... Tail>
-void GenerateGrid(Callback callback, const std::initializer_list<T>& list,
-                  const std::initializer_list<Tail>&... tail) {
-  GenerateGrid<Callback, std::initializer_list<T>,
-               std::initializer_list<Tail...>>(callback, list, tail...);
 }
 
 static struct {
@@ -103,16 +92,6 @@ void AddGridBenchmark(KVDescriptionGenerator kv_description_generator,
       param_list...);
 }
 
-template <class KVDescriptionGenerator, class Generator, class Operation,
-          class... T>
-void AddGridBenchmark(KVDescriptionGenerator kv_description_generator,
-                      Generator generator, Operation operation,
-                      const std::initializer_list<T>&... param_list) {
-  AddGridBenchmark<KVDescriptionGenerator, Generator, Operation,
-                   std::initializer_list<T>...>(
-      kv_description_generator, generator, operation, param_list...);
-}
-
 void Run(int& argc, char* argv[]) {
   benchmark::Initialize(&argc, argv);
   benchmark::RunSpecifiedBenchmarks();
@@ -120,4 +99,4 @@ void Run(int& argc, char* argv[]) {
   benchmark::Shutdown();
 }
 
-}  // namespace meta_benchmark
+}  // namespace grid_benchmark

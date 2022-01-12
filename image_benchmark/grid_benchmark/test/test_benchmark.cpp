@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include <meta_benchmark.h>
+#include <grid_benchmark.h>
 
 template <class Arithmetic>
 using Matrix = std::vector<std::vector<Arithmetic>>;
@@ -52,11 +52,12 @@ int main(int argc, char* argv[]) {
         {"op", "Convert"}, {"w", std::to_string(w)}, {"h", std::to_string(h)}};
   };
 
-  meta_benchmark::AddGridBenchmark(kv_description_generator, generator,
-                                   operation, {1, 2, 4, 8, 16, 32, 64},
-                                   {1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+  grid_benchmark::AddGridBenchmark(
+      kv_description_generator, generator, operation,
+      std::array<size_t, 7>{1, 2, 4, 8, 16, 32, 64},
+      std::array<size_t, 10>{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
 
-  meta_benchmark::Run(argc, argv);
+  grid_benchmark::Run(argc, argv);
 
   return 0;
 }

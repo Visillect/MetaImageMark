@@ -1,40 +1,23 @@
-include(FetchContent)
-
-# ------------------------------------------------------------------------------
-# MinImg Base
-# ------------------------------------------------------------------------------
-
-set(MINIMG_BASE_INCLUDE_DIR "" CACHE PATH "Path to MinImg minbase include \
+function(ADD_MINIMG_LIBRARY NAME TARGET)
+    set(${NAME}_INCLUDE_DIR "" CACHE PATH "Path to MinImg ${TARGET} include \
     directory")
-set(MINIMG_BASE_LIBRARY "" CACHE PATH "Path to MinImg minbase dynamic library \
-    directory")
+    set(${NAME}_LIBRARY "" CACHE PATH "Path to MinImg ${TARGET} dynamic library")
 
-set(MINIMG_API_INCLUDE_DIR "" CACHE PATH "Path to MinImg minimgapi include \
-    directory")
-set(MINIMG_API_LIBRARY "" CACHE PATH "Path to MinImg minimgapi dynamic library \
-    directory")
+    if (NOT (EXISTS ${${NAME}_INCLUDE_DIR}) OR NOT (EXISTS ${${NAME}_LIBRARY}))
+        message(FATAL_ERROR "Can't find ${TARGET}. Set valid ${NAME}_INCLUDE_DIR \
+                and ${NAME}_LIBRARY")
+    endif ()
 
-set(MINIMG_PRC_INCLUDE_DIR "" CACHE PATH "Path to MinImg minimgprc include \
-    directory")
-set(MINIMG_PRC_LIBRARY "" CACHE PATH "Path to MinImg minimgprc dynamic library \
-    directory")
+    add_library(${TARGET} SHARED IMPORTED)
+    set_target_properties(${TARGET} PROPERTIES IMPORTED_LOCATION ${${NAME}_LIBRARY})
+    set_target_properties(${TARGET} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
+            ${${NAME}_INCLUDE_DIR})
+endfunction()
 
-# ------------------------------------------------------------------------------
-# MinImg Prc
-# ------------------------------------------------------------------------------
+ADD_MINIMG_LIBRARY(MINBASE minbase)
+ADD_MINIMG_LIBRARY(MINIMGAPI minimgapi)
+ADD_MINIMG_LIBRARY(MINIMGPRC minimgprc)
 
-set(MINIMG_PRC_INSTALL_DIR "" CACHE PATH "Path to minimgprc directory")
-
-if (NOT (EXISTS ${MINIMG_PRC_INSTALL_DIR}))
-    message(FATAL_ERROR "Can't find minimgprc. Set valid MINIMG_PRC_INSTALL_DIR")
-endif ()
-
-add_library(minimgprc SHARED IMPORTED)
-set_target_properties(minimgprc PROPERTIES IMPORTED_LOCATION
-        ${MINIMG_PRC_INSTALL_DIR})
-
-# ------------------------------------------------------------------------------
-
-add_executable(minimg_merge_image src/merge_image.cpp src/utils.h)
+add_executable(minimg_merge_image src/merge_image.cpp src/common.h)
 target_link_libraries(minimg_merge_image PRIVATE grid_benchmark minbase
         minimgapi minimgprc)
