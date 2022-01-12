@@ -19,69 +19,85 @@ auto MakeDescriptionGenerator(std::string operation) {
   };
 }
 
-void BinarySum(ImageTriplet& triplet) {
-  auto& [output, first, second] = triplet;
-  THROW_ON_ERROR(MergeImage(output.get(), first.get(), second.get(), BIOP_ADD));
+void BinarySum() {
+  auto operation = [](ImageTriplet& triplet) {
+    auto& [output, first, second] = triplet;
+    THROW_ON_ERROR(
+        MergeImage(output.get(), first.get(), second.get(), BIOP_ADD));
+  };
+
+  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinarySum"),
+                                   GenerateTriplet, operation, kImageTypes,
+                                   kOneChannel, kImageSide, kImageSide);
 }
 
-void BinaryDifference(ImageTriplet& triplet) {
-  auto& [output, first, second] = triplet;
-  THROW_ON_ERROR(MergeImage(output.get(), first.get(), second.get(), BIOP_DIF));
+void BinaryDifference() {
+  auto operation = [](ImageTriplet& triplet) {
+    auto& [output, first, second] = triplet;
+    THROW_ON_ERROR(
+        MergeImage(output.get(), first.get(), second.get(), BIOP_DIF));
+  };
+
+  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryDiff"),
+                                   GenerateTriplet, operation, kImageTypes,
+                                   kOneChannel, kImageSide, kImageSide);
 }
 
-void BinaryAbsoluteDifference(ImageTriplet& triplet) {
-  auto& [output, first, second] = triplet;
-  THROW_ON_ERROR(MergeImage(output.get(), first.get(), second.get(), BIOP_ADF));
+void BinaryAbsoluteDifference() {
+  auto operation = [](ImageTriplet& triplet) {
+    auto& [output, first, second] = triplet;
+    THROW_ON_ERROR(
+        MergeImage(output.get(), first.get(), second.get(), BIOP_ADF));
+  };
+
+  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryADF"),
+                                   GenerateTriplet, operation, kImageTypes,
+                                   kOneChannel, kImageSide, kImageSide);
 }
 
-void BinaryMultiplication(ImageTriplet& triplet) {
-  auto& [output, first, second] = triplet;
-  THROW_ON_ERROR(MergeImage(output.get(), first.get(), second.get(), BIOP_MUL));
+void BinaryMultiplication() {
+  auto operation = [](ImageTriplet& triplet) {
+    auto& [output, first, second] = triplet;
+    THROW_ON_ERROR(
+        MergeImage(output.get(), first.get(), second.get(), BIOP_MUL));
+  };
+
+  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryMult"),
+                                   GenerateTriplet, operation, kImageTypes,
+                                   kOneChannel, kImageSide, kImageSide);
 }
 
-void BinaryDivision(ImageTriplet& triplet) {
-  auto& [output, first, second] = triplet;
-  THROW_ON_ERROR(MergeImage(output.get(), first.get(), second.get(), BIOP_DIV));
+// Doesn't work. Does not work. Most likely division by zero.
+void BinaryDivision() {
+  auto operation = [](ImageTriplet& triplet) {
+    auto& [output, first, second] = triplet;
+    THROW_ON_ERROR(
+        MergeImage(output.get(), first.get(), second.get(), BIOP_DIV));
+  };
+
+  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryDiv"),
+                                   GenerateTriplet, operation, kImageTypes,
+                                   kOneChannel, kImageSide, kImageSide);
 }
 
-void BinaryPow(ImageTriplet& triplet) {
-  auto& [output, first, second] = triplet;
-  THROW_ON_ERROR(MergeImage(output.get(), first.get(), second.get(), BIOP_POW));
+void BinaryPow() {
+  auto operation = [](ImageTriplet& triplet) {
+    auto& [output, first, second] = triplet;
+    THROW_ON_ERROR(
+        MergeImage(output.get(), first.get(), second.get(), BIOP_POW));
+  };
+
+  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryPow"),
+                                   GenerateTriplet, operation, kImageTypes,
+                                   kOneChannel, kImageSide, kImageSide);
 }
 
 int main(int argc, char* argv[]) {
-  //// BinarySum
-  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinarySum"),
-                                   GenerateTriplet, BinarySum, kImageTypes,
-                                   kOneChannel, kImageSide, kImageSide);
-
-  //// BinaryDiff
-  grid_benchmark::AddGridBenchmark(
-      MakeDescriptionGenerator("BinaryDiff"), GenerateTriplet, BinaryDifference,
-      kImageTypes, kOneChannel, kImageSide, kImageSide);
-
-  //// BinaryADF
-  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryADF"),
-                                   GenerateTriplet, BinaryAbsoluteDifference,
-                                   kImageTypes, kOneChannel, kImageSide,
-                                   kImageSide);
-
-  //// BinaryMult
-  grid_benchmark::AddGridBenchmark(
-      MakeDescriptionGenerator("BinaryMult"), GenerateTriplet,
-      BinaryMultiplication, kImageTypes, kOneChannel, kImageSide, kImageSide);
-
-  //// BinaryDiv
-  // Doesn't work. Does not work. Most likely division by zero.
-  // grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryDiv"),
-  //                                   GenerateTriplet, BinaryDivision,
-  //                                   kImageTypes, kChannels, kImageSide,
-  //                                   kImageSide);
-
-  //// BinaryPow
-  grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryPow"),
-                                   GenerateTriplet, BinaryPow, kImageTypes,
-                                   kOneChannel, kImageSide, kImageSide);
+  BinarySum();
+  BinaryDifference();
+  BinaryAbsoluteDifference();
+  BinaryMultiplication();
+  BinaryPow();
 
   grid_benchmark::Run(argc, argv);
 }
