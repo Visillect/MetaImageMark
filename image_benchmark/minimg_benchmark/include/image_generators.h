@@ -69,16 +69,30 @@ BENCH_INLINE ImageTriplet EqualTriplet(MinTyp typ, int ch, int w, int h) {
 
 ////////////////////////////////////////////////////////////////////////////////
 
-struct ImagePairWithNumber : generators::ImagePair {
+struct ImagePairWithNumber : ImagePair {
   int value;
 };
 
-ImagePairWithNumber ImagePairNumber(MinTyp typ, int value, int ch, int w,
-                                    int h) {
+BENCH_INLINE ImagePairWithNumber ImagePairNumber(MinTyp typ, int value, int ch,
+                                                 int w, int h) {
   auto generate = [=]() {
     return RandomImage(typ, ch, w, h);
   };
   return {generate(), generate(), value};
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+struct ImagePairWithFloat : ImagePair {
+  double value;
 };
+
+BENCH_INLINE ImagePairWithFloat ImagePairFloat(MinTyp typ, double value, int ch,
+                                               int w, int h) {
+  auto generate = [=]() {
+    return RandomImage(typ, ch, w, h);
+  };
+  return {generate(), generate(), value};
+}
 
 }  // namespace generators

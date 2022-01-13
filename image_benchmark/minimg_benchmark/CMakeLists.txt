@@ -40,3 +40,6 @@ target_link_libraries(bench_minimg_box_filter PRIVATE bench_minimg_base)
 
 add_executable(bench_minimg_lintransform src/lintransform.cpp)
 target_link_libraries(bench_minimg_lintransform PRIVATE bench_minimg_base)
+
+add_executable(bench_minimg_gauss_filter src/gauss_filter.cpp)
+target_link_libraries(bench_minimg_gauss_filter PRIVATE bench_minimg_base)

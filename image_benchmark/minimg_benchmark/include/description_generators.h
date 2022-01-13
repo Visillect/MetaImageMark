@@ -51,6 +51,10 @@ BENCH_INLINE Pair BoxSize(int size) {
   return {"box_size", std::to_string(size)};
 }
 
+BENCH_INLINE Pair Sigma(double sigma) {
+  return {"sigma", std::to_string(sigma)};
+}
+
 }  // namespace pairs
 
 BENCH_INLINE auto Image(std::string operation) {
@@ -86,6 +90,16 @@ BENCH_INLINE auto BoxFilter(std::string operation) {
                                             int w, int h) {
     return KVContainer{pairs::kLibrary,     pairs::Operation(operation),
                        pairs::Type(typ),    pairs::BoxSize(box_size),
+                       pairs::Channels(ch), pairs::ImgWidth(w),
+                       pairs::ImgHeight(h)};
+  };
+}
+
+BENCH_INLINE auto GaussFilter(std::string operation) {
+  return [operation = std::move(operation)](MinTyp typ, double sigma, int ch,
+                                            int w, int h) {
+    return KVContainer{pairs::kLibrary,     pairs::Operation(operation),
+                       pairs::Type(typ),    pairs::Sigma(sigma),
                        pairs::Channels(ch), pairs::ImgWidth(w),
                        pairs::ImgHeight(h)};
   };
