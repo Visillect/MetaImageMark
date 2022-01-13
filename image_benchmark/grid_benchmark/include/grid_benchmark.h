@@ -5,6 +5,7 @@
 #include <utility>
 
 #include <benchmark/benchmark.h>
+#include <system_info.h>
 
 namespace grid_benchmark {
 
@@ -94,6 +95,11 @@ void AddGridBenchmark(KVDescriptionGenerator kv_description_generator,
 
 void Run(int& argc, char* argv[]) {
   benchmark::Initialize(&argc, argv);
+
+  for (const auto& [key, value] : GetSystemInfo()) {
+    benchmark::AddCustomContext(key, value);
+  }
+
   benchmark::RunSpecifiedBenchmarks();
 
   benchmark::Shutdown();
