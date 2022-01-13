@@ -25,3 +25,7 @@ target_link_libraries(bench_minimg_merge PRIVATE grid_benchmark minbase
 add_executable(bench_minimg_transpose src/transpose.cpp)
 target_link_libraries(bench_minimg_transpose PRIVATE grid_benchmark minbase
         minimgapi minimgprc)
+
+add_executable(bench_minimg_convert src/convert.cpp)
+target_link_libraries(bench_minimg_convert PRIVATE grid_benchmark minbase
+        minimgapi minimgprc)

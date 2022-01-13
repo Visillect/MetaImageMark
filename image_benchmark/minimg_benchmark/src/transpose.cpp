@@ -11,16 +11,16 @@ auto MakeDescriptionGenerator(std::string operation) {
   return [operation = std::move(operation)](MinTyp type, int ch, int w, int h) {
     return KVContainer{{"lib", "MinImg"},
                        {"op", operation},
-                       {"MinType", GetMinTypeString(type)},
+                       {"typ", GetMinTypeString(type)},
                        {"ch", std::to_string(ch)},
-                       {"w", std::to_string(w)},
-                       {"h", std::to_string(h)}};
+                       {"img_w", std::to_string(w)},
+                       {"img_h", std::to_string(h)}};
   };
 }
 
 void Transpose() {
-  auto operation = [](ImagePair& triplet) {
-    auto& [first, second] = triplet;
+  auto operation = [](ImagePair& pair) {
+    auto& [first, second] = pair;
     THROW_ON_ERROR(TransposeMinImage(second.get(), first.get()));
   };
 
