@@ -1,3 +1,4 @@
 .idea
 .vscode
-image_benchmark/**/*build*
+*build*
+!report_builder
