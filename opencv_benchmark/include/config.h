@@ -6,13 +6,9 @@
 
 constexpr std::array<int, 15> kImageSide{1,  2,  3,   4,   7,   12,  19,  32,
                                          52, 85, 139, 228, 373, 611, 1000};
-#if CV_MAJOR_VERSION >= 4
-constexpr std::array<int, 8> kImageTypes{CV_8U,  CV_8S,  CV_16U, CV_16S,
-                                         CV_32S, CV_16F, CV_32F, CV_64F};
-#else
+
 constexpr std::array<int, 7> kImageTypes{CV_8U,  CV_8S,  CV_16U, CV_16S,
                                          CV_32S, CV_32F, CV_64F};
-#endif
 
 constexpr std::array<int, 1> kChannels{1};
 constexpr std::array<double, 6> kDownScale{0.67, 0.5, 0.34, 0.25, 0.2, 0.17};
