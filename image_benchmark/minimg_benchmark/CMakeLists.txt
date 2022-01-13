@@ -35,3 +35,5 @@ target_link_libraries(bench_minimg_convert PRIVATE bench_minimg_base)
 add_executable(bench_minimg_downscale src/downscale.cpp)
 target_link_libraries(bench_minimg_downscale PRIVATE bench_minimg_base)
 
+add_executable(bench_minimg_box_filter src/box_filter.cpp)
+target_link_libraries(bench_minimg_box_filter PRIVATE bench_minimg_base)

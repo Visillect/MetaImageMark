@@ -11,3 +11,4 @@ constexpr std::array<MinTyp, 10> kImageTypes{
     TYP_UINT32, TYP_INT64, TYP_UINT64, TYP_REAL32, TYP_REAL64};
 constexpr std::array<int, 1> kChannels{1};
 constexpr std::array<double, 6> kDownScale{0.67, 0.5, 0.34, 0.25, 0.2, 0.17};
+constexpr std::array<int, 5> kBoxSize{2, 5, 10, 100, 300};

@@ -15,8 +15,20 @@ void ScalePixel() {
       kImageTypes, kDownScale, kChannels, kImageSide, kImageSide);
 }
 
+void ScaleSubPixel() {
+  auto operation = [](generators::ImagePair& pair) {
+    THROW_ON_ERROR(ScaleImage(pair.dest.get(), pair.src.get(),
+                              QualityOption::QO_SUBPIXEL));
+  };
+
+  grid_benchmark::AddGridBenchmark(
+      description::Scale("ScaleSubPixel"), generators::ScalePair, operation,
+      kImageTypes, kDownScale, kChannels, kImageSide, kImageSide);
+}
+
 int main(int argc, char* argv[]) {
   ScalePixel();
+  ScaleSubPixel();
 
   grid_benchmark::Run(argc, argv);
 }

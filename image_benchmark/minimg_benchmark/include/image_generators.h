@@ -29,7 +29,7 @@ struct ImagePair {
 };
 
 BENCH_INLINE ImagePair DoubleTypePair(MinTyp from_typ, MinTyp to_typ, int ch,
-                                   int w, int h) {
+                                      int w, int h) {
   return {RandomImage(from_typ, ch, w, h), RandomImage(to_typ, ch, w, h)};
 }
 
@@ -67,4 +67,18 @@ BENCH_INLINE ImageTriplet EqualTriplet(MinTyp typ, int ch, int w, int h) {
   return {generate(), generate(), generate()};
 }
 
-}  // namespace image_gens
+////////////////////////////////////////////////////////////////////////////////
+
+struct ImagePairWithNumber : generators::ImagePair {
+  int value;
+};
+
+ImagePairWithNumber ImagePairNumber(MinTyp typ, int value, int ch, int w,
+                                    int h) {
+  auto generate = [=]() {
+    return RandomImage(typ, ch, w, h);
+  };
+  return {generate(), generate(), value};
+};
+
+}  // namespace generators

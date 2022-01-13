@@ -47,6 +47,10 @@ BENCH_INLINE Pair Scale(double scale) {
   return {"scale", std::to_string(scale)};
 }
 
+BENCH_INLINE Pair BoxSize(int size) {
+  return {"box_size", std::to_string(size)};
+}
+
 }  // namespace pairs
 
 BENCH_INLINE auto Image(std::string operation) {
@@ -72,6 +76,16 @@ BENCH_INLINE auto Scale(std::string operation) {
                                             int w, int h) {
     return KVContainer{pairs::kLibrary,     pairs::Operation(operation),
                        pairs::Type(typ),    pairs::Scale(scale),
+                       pairs::Channels(ch), pairs::ImgWidth(w),
+                       pairs::ImgHeight(h)};
+  };
+}
+
+BENCH_INLINE auto BoxFilter(std::string operation) {
+  return [operation = std::move(operation)](MinTyp typ, int box_size, int ch,
+                                            int w, int h) {
+    return KVContainer{pairs::kLibrary,     pairs::Operation(operation),
+                       pairs::Type(typ),    pairs::BoxSize(box_size),
                        pairs::Channels(ch), pairs::ImgWidth(w),
                        pairs::ImgHeight(h)};
   };
