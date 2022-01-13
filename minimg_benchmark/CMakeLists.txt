@@ -1,3 +1,5 @@
+project(minimg_benchmark)
+
 function(ADD_MINIMG_LIBRARY NAME TARGET)
     set(${NAME}_INCLUDE_DIR "" CACHE PATH "Path to MinImg ${TARGET} include \
         directory")

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <array>
 #include <memory>
-#include <utility>
+#include <string>
 
 #include <minbase/minimg.h>
 #include <minbase/minresult.h>
@@ -48,12 +47,12 @@ BENCH_INLINE std::string DescribeError(int error) {
   } while (false)
 
 struct MinImgDeleter {
-  void operator()(MinImg* image) {
-    if (image != nullptr) {
-      THROW_ON_ERROR(FreeMinImage(image));
+    void operator()(MinImg *image) {
+      if (image != nullptr) {
+        THROW_ON_ERROR(FreeMinImage(image));
+      }
+      delete image;
     }
-    delete image;
-  }
 };
 
 using MinImgUniquePtr = std::unique_ptr<MinImg, MinImgDeleter>;
@@ -61,29 +60,29 @@ using MinImgUniquePtr = std::unique_ptr<MinImg, MinImgDeleter>;
 BENCH_INLINE std::string GetTypeString(MinTyp type) {
   switch (type) {
     case TYP_UINT1:
-      return "TYP_UINT1";
+      return "UINT1";
     case TYP_UINT8:
-      return "TYP_UINT8";
+      return "UINT8";
     case TYP_UINT16:
-      return "TYP_UINT16";
+      return "UINT16";
     case TYP_UINT32:
-      return "TYP_UINT32";
+      return "UINT32";
     case TYP_UINT64:
-      return "TYP_UINT64";
+      return "UINT64";
     case TYP_INT8:
-      return "TYP_INT8";
+      return "INT8";
     case TYP_INT16:
-      return "TYP_INT16";
+      return "INT16";
     case TYP_INT32:
-      return "TYP_INT32";
+      return "INT32";
     case TYP_INT64:
-      return "TYP_INT64";
+      return "INT64";
     case TYP_REAL16:
-      return "TYP_REAL16";
+      return "REAL16";
     case TYP_REAL32:
-      return "TYP_REAL32";
+      return "REAL32";
     case TYP_REAL64:
-      return "TYP_REAL64";
+      return "REAL64";
     default:
       throw std::runtime_error("Invalid type");
   }
