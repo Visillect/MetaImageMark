@@ -18,14 +18,20 @@ ADD_MINIMG_LIBRARY(MINBASE minbase)
 ADD_MINIMG_LIBRARY(MINIMGAPI minimgapi)
 ADD_MINIMG_LIBRARY(MINIMGPRC minimgprc)
 
-add_executable(bench_minimg_merge src/merge.cpp)
-target_link_libraries(bench_minimg_merge PRIVATE grid_benchmark minbase
+add_library(bench_minimg_base INTERFACE)
+target_include_directories(bench_minimg_base INTERFACE include)
+target_link_libraries(bench_minimg_base INTERFACE grid_benchmark minbase
         minimgapi minimgprc)
+
+add_executable(bench_minimg_merge src/merge.cpp)
+target_link_libraries(bench_minimg_merge PRIVATE bench_minimg_base)
 
 add_executable(bench_minimg_transpose src/transpose.cpp)
-target_link_libraries(bench_minimg_transpose PRIVATE grid_benchmark minbase
-        minimgapi minimgprc)
+target_link_libraries(bench_minimg_transpose PRIVATE bench_minimg_base)
 
 add_executable(bench_minimg_convert src/convert.cpp)
-target_link_libraries(bench_minimg_convert PRIVATE grid_benchmark minbase
-        minimgapi minimgprc)
+target_link_libraries(bench_minimg_convert PRIVATE bench_minimg_base)
+
+add_executable(bench_minimg_downscale src/downscale.cpp)
+target_link_libraries(bench_minimg_downscale PRIVATE bench_minimg_base)
+

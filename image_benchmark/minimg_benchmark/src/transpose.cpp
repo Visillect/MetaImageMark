@@ -1,16 +1,16 @@
 #include <grid_benchmark.h>
 
-#include "common.h"
-#include "config.h"
+#include <config.h>
+#include <description_generators.h>
+#include <image_generators.h>
 
 void Transpose() {
-  auto operation = [](ImagePair& pair) {
-    auto& [first, second] = pair;
-    THROW_ON_ERROR(TransposeMinImage(second.get(), first.get()));
+  auto operation = [](generators::ImagePair& pair) {
+    THROW_ON_ERROR(TransposeMinImage(pair.dest.get(), pair.src.get()));
   };
 
   grid_benchmark::AddGridBenchmark(
-      MakeDescriptionGenerator("Transpose"), GenerateTransposePair, operation,
+      description::Image("Transpose"), generators::TransposePair, operation,
       kImageTypes, kChannels, kImageSide, kImageSide);
 }
 

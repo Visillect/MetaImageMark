@@ -4,18 +4,19 @@
 #include <description_generators.h>
 #include <image_generators.h>
 
-void Convert() {
+void ScalePixel() {
   auto operation = [](generators::ImagePair& pair) {
-    THROW_ON_ERROR(ConvertImage(pair.dest.get(), pair.src.get()));
+    THROW_ON_ERROR(
+        ScaleImage(pair.dest.get(), pair.src.get(), QualityOption::QO_PIXEL));
   };
 
   grid_benchmark::AddGridBenchmark(
-      description::DoubleType("Convert"), generators::DoubleTypePair, operation,
-      kImageTypes, kImageTypes, kChannels, kImageSide, kImageSide);
+      description::Scale("ScalePixel"), generators::ScalePair, operation,
+      kImageTypes, kDownScale, kChannels, kImageSide, kImageSide);
 }
 
 int main(int argc, char* argv[]) {
-  Convert();
+  ScalePixel();
 
   grid_benchmark::Run(argc, argv);
 }
