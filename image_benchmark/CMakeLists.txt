@@ -23,9 +23,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
+
 # ------------------------------------------------------------------------------
 # Google benchmark
 # ------------------------------------------------------------------------------
+
+set(BENCHMARK_ENABLE_INSTALL OFF)
+set(BENCHMARK_ENABLE_TESTING OFF)
 
 # Including source files because of problems with library installation and
 # to avoid potential linking problems

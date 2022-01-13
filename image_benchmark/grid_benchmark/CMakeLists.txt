@@ -1,4 +1,4 @@
-project(meta_base)
+project(grid_benchmark)
 
 add_library(grid_benchmark INTERFACE)
 
