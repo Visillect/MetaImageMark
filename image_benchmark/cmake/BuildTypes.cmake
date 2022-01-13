@@ -28,3 +28,6 @@ set(CMAKE_EXE_LINKER_FLAGS_ASAN
 set(CMAKE_SHARED_LINKER_FLAGS_ASAN
         "${CMAKE_SHARED_LINKER_FLAGS_DEBUG} -fsanitize=address,undefined" CACHE STRING
         "Linker lags to be used to create shared libraries for Asan build type." FORCE)
+
+# Add no-as-needed flag to prevent libminbase.so elimination in executable
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--no-as-needed")
