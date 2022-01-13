@@ -67,7 +67,7 @@ MinImgUniquePtr GenerateRandomImage(MinTyp scalar_type, int channel_count,
   return image;
 }
 
-std::string GetMinTypeString(MinTyp type) {
+std::string GetTypeString(MinTyp type) {
   switch (type) {
     case TYP_UINT1:
       return "TYP_UINT1";
@@ -103,10 +103,51 @@ using ImagePair = std::pair<MinImgUniquePtr, MinImgUniquePtr>;
 using ImageTriplet =
     std::tuple<MinImgUniquePtr, MinImgUniquePtr, MinImgUniquePtr>;
 
-constexpr std::array<int, 15> kImageSide{1,  2,  3,   4,   7,   12,  19,  32,
-                                         52, 85, 139, 228, 373, 611, 1000};
-constexpr std::array<MinTyp, 10> kImageTypes{
-    TYP_INT8,   TYP_UINT8, TYP_INT16,  TYP_UINT16, TYP_INT32,
-    TYP_UINT32, TYP_INT64, TYP_UINT64, TYP_REAL32, TYP_REAL64};
-constexpr std::array<int, 1> kOneChannel{1};
-constexpr std::array<int, 2> kTwoChannels{1, 3};
+ImagePair GenerateConvertPair(MinTyp from_typ, MinTyp to_typ, int ch, int w,
+                              int h) {
+  return {GenerateRandomImage(from_typ, ch, w, h),
+          GenerateRandomImage(to_typ, ch, w, h)};
+}
+
+ImagePair GenerateTransposePair(MinTyp typ, int ch, int w, int h) {
+  return {GenerateRandomImage(typ, ch, w, h),
+          GenerateRandomImage(typ, ch, h, w)};
+}
+
+ImagePair GenerateEqualPair(MinTyp typ, int ch, int w, int h) {
+  auto generate = [=]() {
+    return GenerateRandomImage(typ, ch, w, h);
+  };
+  return {generate(), generate()};
+}
+
+ImageTriplet GenerateEqualTriplet(MinTyp typ, int ch, int w, int h) {
+  auto generate = [=]() {
+    return GenerateRandomImage(typ, ch, w, h);
+  };
+  return {generate(), generate(), generate()};
+}
+
+auto MakeConvertDescriptionGenerator(std::string operation) {
+  return [operation = std::move(operation)](MinTyp from_typ, MinTyp to_typ,
+                                            int ch, int w, int h) {
+    return KVContainer{{"lib", "MinImg"},
+                       {"op", operation},
+                       {"from_typ", GetTypeString(from_typ)},
+                       {"to_typ", GetTypeString(to_typ)},
+                       {"ch", std::to_string(ch)},
+                       {"img_w", std::to_string(w)},
+                       {"img_h", std::to_string(h)}};
+  };
+}
+
+auto MakeDescriptionGenerator(std::string operation) {
+  return [operation = std::move(operation)](MinTyp typ, int ch, int w, int h) {
+    return KVContainer{{"lib", "MinImg"},
+                       {"op", operation},
+                       {"typ", GetTypeString(typ)},
+                       {"ch", std::to_string(ch)},
+                       {"img_w", std::to_string(w)},
+                       {"img_h", std::to_string(h)}};
+  };
+}

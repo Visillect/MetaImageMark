@@ -1,24 +1,7 @@
 #include <grid_benchmark.h>
 
 #include "common.h"
-
-ImageTriplet GenerateTriplet(MinTyp type, int ch, int w, int h) {
-  auto generate = [=]() {
-    return GenerateRandomImage(type, ch, w, h);
-  };
-  return ImageTriplet{generate(), generate(), generate()};
-}
-
-auto MakeDescriptionGenerator(std::string operation) {
-  return [operation = std::move(operation)](MinTyp type, int ch, int w, int h) {
-    return KVContainer{{"lib", "MinImg"},
-                       {"op", operation},
-                       {"typ", GetMinTypeString(type)},
-                       {"ch", std::to_string(ch)},
-                       {"img_w", std::to_string(w)},
-                       {"img_h", std::to_string(h)}};
-  };
-}
+#include "config.h"
 
 void BinarySum() {
   auto operation = [](ImageTriplet& triplet) {
@@ -28,8 +11,8 @@ void BinarySum() {
   };
 
   grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinarySum"),
-                                   GenerateTriplet, operation, kImageTypes,
-                                   kOneChannel, kImageSide, kImageSide);
+                                   GenerateEqualTriplet, operation, kImageTypes,
+                                   kChannels, kImageSide, kImageSide);
 }
 
 void BinaryDifference() {
@@ -40,8 +23,8 @@ void BinaryDifference() {
   };
 
   grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryDiff"),
-                                   GenerateTriplet, operation, kImageTypes,
-                                   kOneChannel, kImageSide, kImageSide);
+                                   GenerateEqualTriplet, operation, kImageTypes,
+                                   kChannels, kImageSide, kImageSide);
 }
 
 void BinaryAbsoluteDifference() {
@@ -52,8 +35,8 @@ void BinaryAbsoluteDifference() {
   };
 
   grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryADF"),
-                                   GenerateTriplet, operation, kImageTypes,
-                                   kOneChannel, kImageSide, kImageSide);
+                                   GenerateEqualTriplet, operation, kImageTypes,
+                                   kChannels, kImageSide, kImageSide);
 }
 
 void BinaryMultiplication() {
@@ -64,8 +47,8 @@ void BinaryMultiplication() {
   };
 
   grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryMult"),
-                                   GenerateTriplet, operation, kImageTypes,
-                                   kOneChannel, kImageSide, kImageSide);
+                                   GenerateEqualTriplet, operation, kImageTypes,
+                                   kChannels, kImageSide, kImageSide);
 }
 
 // Doesn't work. Most likely division by zero.
@@ -77,8 +60,8 @@ void BinaryDivision() {
   };
 
   grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryDiv"),
-                                   GenerateTriplet, operation, kImageTypes,
-                                   kOneChannel, kImageSide, kImageSide);
+                                   GenerateEqualTriplet, operation, kImageTypes,
+                                   kChannels, kImageSide, kImageSide);
 }
 
 void BinaryPow() {
@@ -89,8 +72,8 @@ void BinaryPow() {
   };
 
   grid_benchmark::AddGridBenchmark(MakeDescriptionGenerator("BinaryPow"),
-                                   GenerateTriplet, operation, kImageTypes,
-                                   kOneChannel, kImageSide, kImageSide);
+                                   GenerateEqualTriplet, operation, kImageTypes,
+                                   kChannels, kImageSide, kImageSide);
 }
 
 int main(int argc, char* argv[]) {
