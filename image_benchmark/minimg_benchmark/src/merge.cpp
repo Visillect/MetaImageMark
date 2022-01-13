@@ -11,7 +11,8 @@ ImageTriplet GenerateTriplet(MinTyp type, int ch, int w, int h) {
 
 auto MakeDescriptionGenerator(std::string operation) {
   return [operation = std::move(operation)](MinTyp type, int ch, int w, int h) {
-    return KVContainer{{"op", operation},
+    return KVContainer{{"lib", "MinImg"},
+                       {"op", operation},
                        {"MinType", GetMinTypeString(type)},
                        {"ch", std::to_string(ch)},
                        {"w", std::to_string(w)},
