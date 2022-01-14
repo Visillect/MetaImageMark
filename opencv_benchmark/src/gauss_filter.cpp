@@ -1,11 +1,7 @@
-#include <grid_benchmark.h>
-
-#include <config.h>
-#include <description_generators.h>
-#include <image_generators.h>
+#include <opencv_benchmark/common.h>
 
 void GaussFilter() {
-  auto operation = [](generators::ImagePairWithFloat& pair) {
+  auto operation = [](image_benchmark::ImagePairWithValue<double>& pair) {
     int half_height = std::max(1, static_cast<int>(pair.value * 3 + .5));
     int size = half_height * 2 + 1;
 
@@ -14,8 +10,9 @@ void GaussFilter() {
   };
 
   grid_benchmark::AddGridBenchmark(
-      description::GaussFilter("GaussFilter"), generators::ImagePairFloat,
-      operation, kImageTypes, kSigmas, kChannels, kImageSide, kImageSide);
+      image_benchmark::GaussFilter("GaussFilter"),
+      image_benchmark::ImagePairWithValueGen<double>, operation, kImageTypes,
+      kSigmas, kChannels, kImageSide, kImageSide);
 }
 
 int main(int argc, char* argv[]) {

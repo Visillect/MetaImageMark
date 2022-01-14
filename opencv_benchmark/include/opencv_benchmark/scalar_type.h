@@ -1,14 +1,13 @@
 #pragma once
 
-#include <array>
-#include <memory>
-#include <utility>
+#include <string>
 
-#include <opencv2/core.hpp>
+#include <image_benchmark/macros.h>
+#include <opencv_benchmark/image.h>
 
-#define BENCH_INLINE static inline
+using ScalarType = int;
 
-BENCH_INLINE std::string GetTypeString(int type) {
+BENCH_INLINE std::string GetTypeString(ScalarType type) {
   switch (type) {
     case CV_8U:
       return "UINT8";

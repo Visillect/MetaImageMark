@@ -48,6 +48,7 @@ FetchContent_MakeAvailable(google_benchmark)
 
 add_subdirectory(system_info)
 add_subdirectory(grid_benchmark)
+add_subdirectory(image_benchmark)
 
 set(MINIMG_BENCHMARK ON CACHE STRING "Whether to enable the MinImg benchmark")
 set(OPENCV_BENCHMARK ON CACHE STRING "Whether to enable the OpenCV benchmark")

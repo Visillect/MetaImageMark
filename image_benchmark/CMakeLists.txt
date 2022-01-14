@@ -1,0 +1,5 @@
+project(image_benchmark)
+
+add_library(image_benchmark INTERFACE)
+target_include_directories(image_benchmark INTERFACE include)
+target_link_libraries(image_benchmark INTERFACE grid_benchmark)

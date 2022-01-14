@@ -22,7 +22,7 @@ ADD_MINIMG_LIBRARY(MINIMGPRC minimgprc)
 
 add_library(bench_minimg_base INTERFACE)
 target_include_directories(bench_minimg_base INTERFACE include)
-target_link_libraries(bench_minimg_base INTERFACE grid_benchmark minbase
+target_link_libraries(bench_minimg_base INTERFACE image_benchmark minbase
         minimgapi minimgprc)
 
 add_executable(bench_minimg_merge src/merge.cpp)

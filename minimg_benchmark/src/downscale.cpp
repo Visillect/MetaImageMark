@@ -1,29 +1,25 @@
-#include <grid_benchmark.h>
-
-#include <config.h>
-#include <description_generators.h>
-#include <image_generators.h>
+#include <minimg_benchmark/common.h>
 
 void ScalePixel() {
-  auto operation = [](generators::ImagePair& pair) {
+  auto operation = [](image_benchmark::ImagePair& pair) {
     THROW_ON_ERROR(
         ScaleImage(pair.dest.get(), pair.src.get(), QualityOption::QO_PIXEL));
   };
 
   grid_benchmark::AddGridBenchmark(
-      description::Scale("ScalePixel"), generators::ScalePair, operation,
-      kImageTypes, kDownScale, kChannels, kImageSide, kImageSide);
+      image_benchmark::Scale("ScalePixel"), image_benchmark::ScalePairGen,
+      operation, kImageTypes, kDownScale, kChannels, kImageSide, kImageSide);
 }
 
 void ScaleSubPixel() {
-  auto operation = [](generators::ImagePair& pair) {
+  auto operation = [](image_benchmark::ImagePair& pair) {
     THROW_ON_ERROR(ScaleImage(pair.dest.get(), pair.src.get(),
                               QualityOption::QO_SUBPIXEL));
   };
 
   grid_benchmark::AddGridBenchmark(
-      description::Scale("ScaleSubPixel"), generators::ScalePair, operation,
-      kImageTypes, kDownScale, kChannels, kImageSide, kImageSide);
+      image_benchmark::Scale("ScaleSubPixel"), image_benchmark::ScalePairGen,
+      operation, kImageTypes, kDownScale, kChannels, kImageSide, kImageSide);
 }
 
 int main(int argc, char* argv[]) {
