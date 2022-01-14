@@ -10,13 +10,12 @@ The framework can be used for various tasks, including:
 
 1. Image processing code optimization.
 2. Performance comparison of various image processing libraries.
-3. Investigation of the dependence of the speed of operations depending on the compilation parameters.
-4. Investigation of the dependence of the speed of operations depending on the hardware.
+3. Investigation of the dependence of the speed of operations depending on the compilation parameters and/or hardware.
 
 MetaImageMark has been successfully used to identify weaknesses of MinImg image processing library and its further
 optimization.
 
-## Running benchmarks
+## Installation
 
 ## Supported Libraries
 
@@ -28,6 +27,6 @@ optimization.
 
 ## Noise suppression
 
-## Project structure
+## Project design
 
 ### Levels of abstractions
