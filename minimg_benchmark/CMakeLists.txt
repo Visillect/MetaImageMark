@@ -1,5 +1,8 @@
 project(minimg_benchmark)
 
+# Add no-as-needed flag to prevent libminbase.so elimination in executable
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--no-as-needed")
+
 function(ADD_MINIMG_LIBRARY NAME TARGET)
     set(${NAME}_INCLUDE_DIR "" CACHE PATH "Path to MinImg ${TARGET} include \
         directory")

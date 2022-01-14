@@ -6,52 +6,25 @@ set(CMAKE_CXX_STANDARD 17)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
+set(DOWNLOAD_DEPENDENCIES OFF CACHE BOOL "Allow cmake to download dependencies")
+set(ENABLE_TESTS OFF CACHE BOOL "Enable project tests")
+
+set(MINIMG_BENCHMARK OFF CACHE BOOL "Whether to enable the MinImg benchmark")
+set(OPENCV_BENCHMARK ON CACHE BOOL "Whether to enable the OpenCV benchmark")
+
+message(STATUS ${benchmark_DIR})
+message(STATUS ${OpenCV_DIR})
+
+include(Dependencies)
 include(BuildTypes)
-include(FetchContent)
 
-enable_testing()
-include(GoogleTest)
-
-# ------------------------------------------------------------------------------
-# Google Test
-# ------------------------------------------------------------------------------
-
-# Including source files to avoid linking errors.
-# See https://github.com/google/googletest/blob/main/googletest/README.md
-message(STATUS "Fetch google test")
-FetchContent_Declare(
-        googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG "release-1.11.0"
-)
-FetchContent_MakeAvailable(googletest)
-
-
-# ------------------------------------------------------------------------------
-# Google benchmark
-# ------------------------------------------------------------------------------
-
-set(BENCHMARK_ENABLE_INSTALL OFF)
-set(BENCHMARK_ENABLE_TESTING OFF)
-
-# Including source files because of problems with library installation and
-# to avoid potential linking problems
-message(STATUS "Fetch google benchmark")
-FetchContent_Declare(
-        google_benchmark
-        GIT_REPOSITORY https://github.com/google/benchmark.git
-        GIT_TAG "v1.6.0"
-)
-FetchContent_MakeAvailable(google_benchmark)
-
-# ------------------------------------------------------------------------------
+if (${ENABLE_TESTS})
+    include(GoogleTest)
+endif ()
 
 add_subdirectory(system_info)
 add_subdirectory(grid_benchmark)
 add_subdirectory(image_benchmark)
-
-set(MINIMG_BENCHMARK ON CACHE STRING "Whether to enable the MinImg benchmark")
-set(OPENCV_BENCHMARK ON CACHE STRING "Whether to enable the OpenCV benchmark")
 
 if (${MINIMG_BENCHMARK})
     add_subdirectory(minimg_benchmark)
