@@ -3,7 +3,7 @@ project(grid_benchmark)
 add_library(grid_benchmark INTERFACE)
 
 target_include_directories(grid_benchmark INTERFACE include)
-target_link_libraries(grid_benchmark INTERFACE benchmark system_info)
+target_link_libraries(grid_benchmark INTERFACE benchmark::benchmark system_info)
 
 if (${ENABLE_TESTS})
     add_executable(test_grid src/test_grid_generator.cpp)
