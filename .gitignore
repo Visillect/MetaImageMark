@@ -2,3 +2,5 @@
 .vscode
 *build*
 !report_builder
+__pycache__
+*pyc
