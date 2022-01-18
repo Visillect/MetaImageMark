@@ -1,67 +1,70 @@
-# ImgPrcBenchmark reporter
+# MetaImageMark reporter
 
-Генератор отчетов для бенчмарков.
+A report generator for benchmarks.
 
-## Примеры использования
+## Usage Examples
 
-### Генерация отчета для времени
+### Generating a report for time
 
 ```sh
 $ python3 -m report_builder minimg.json opencv.json --time
 ```
 
-### Генерация отчета для байт/с
+### Generating a report for bytes/s
 
 ```sh
 $ python3 -m report_builder minimg.json opencv.json --bytes
 ```
 
-### Группировка графиков по ключу без сравнения
+### Grouping plots by key without comparison
 
 ```sh
 $ python3 -m report_builder minimg.json opencv.json -g ch "" --time
 ```
 
-В одной группе будут бенчмарки, у которых отличаются только значения ключей `ch`, остальные будут одинаковые.
+In one group there will be benchmarks that differ only in the values of the keys 'ch`, the rest will be the same.
 
-### Группировка графиков по нескольким ключам без сравнения
+### Grouping plots by multiple keys without comparison
 
 ```sh
 $ python3 -m report_builder minimg.json opencv.json -g ch "" -g op "" --time
 ```
 
-В одной группе будут бенчмарки, у которых отличаются только значения ключей `ch` и `op`, остальные будут одинаковые.
+In one group there will be benchmarks that differ only in the values of the keys 'ch` and 'op`, the rest will be the
+same.
 
-### Группировка графиков ключу cо сравнением
+### Grouping plots by key with comparison
 
 ```sh
 $ python3 -m report_builder minimg.json opencv.json -g lib "MinImg" --time
 ```
 
-В одной группе будут бенчмарки, у которых отличаются только значения поля `lib`, причем если в группе найдется график со
-значением `lib == MinImg`, то относительно этого графика будут построены графики сравнения.
+In one group there will be benchmarks that differ only in the values of
+the `lib' field, and if there is a graph with the value `lib == MinImg` in the group, then comparison plots will be
+plotted relative to this graph.
 
-### Группировка графиков по нескольким ключам cо сравнением
+### Grouping plots by multiple keys with comparison
 
 ```sh
 $ python3 -m report_builder minimg.json opencv.json -g lib "MinImg" -g ch 1 --time
 ```
 
-В одной группе будут бенчмарки, у которых отличаются только значения поля `lib` и `ch`, причем если в группе найдется
-график со значением `lib == MinImg` и `ch == 1`, то относительно этого графика будут построены графики сравнения.
+In one group there will be benchmarks that differ only in the values of the `lib`
+and `ch' fields, and if there is a graph in the group with the values 'lib == MinImg` and 'ch == 1`, then comparison
+plots will be plotted relative to this graph.
 
-### Использование названия файла в качестве тэга
+### Using the file name as a tag
 
 ```sh
 $ python3 -m report_builder *.json --time --filename-as-tag
 ```
 
-Для всех бенчмарков из одного файла будет добавлен тэг данного файла. Данная опция позволяет сравнивать операции,
-скомпилированные по-разному без необходимости изменения исходного кода/файла .json (н-р сравнение Release и Debug
-сборки).
+A tag of this file will be added for all benchmarks from the same file. This option allows you to compare operations
+compiled in different ways without having to change the source code/file.json (for example comparison of Release and
+Debug builds).
 
-### Исползование произвольных названий для тэгов.
+### Using arbitrary names for tags.
 
 ```sh
-$ python3 -m report_builder --time --tag-files DEBUG data1.json --tag-files RELEASE data2.json
+$ python3 -m report_builder --time --tag-files _DEBUG data1.json --tag-files _RELEASE data2.json
 ```
