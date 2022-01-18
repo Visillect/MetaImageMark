@@ -1,9 +1,9 @@
 project(grid_benchmark)
 
-add_library(grid_benchmark INTERFACE)
+add_library(grid_benchmark src/grid_benchmark.cpp)
 
-target_include_directories(grid_benchmark INTERFACE include)
-target_link_libraries(grid_benchmark INTERFACE benchmark::benchmark system_info)
+target_include_directories(grid_benchmark PUBLIC include)
+target_link_libraries(grid_benchmark PUBLIC benchmark::benchmark system_info)
 
 if (${ENABLE_TESTS})
     add_executable(test_grid src/test_grid_generator.cpp)

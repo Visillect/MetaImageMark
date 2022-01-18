@@ -41,25 +41,14 @@ void GenerateGrid(Callback callback, const List& list, const Tail&... tail) {
   }
 }
 
-static struct {
-  double min_time = 0.02;
-  size_t repetition_count = 2;
-
-} benchmark_params;
-
 }  // namespace internal
-
-void SetMinTime(double min_time) {
-  internal::benchmark_params.min_time = min_time;
-}
-
-void SetRepetitionCount(size_t repetition_count) {
-  internal::benchmark_params.repetition_count = repetition_count;
-}
 
 template <class KVContainer, class Generator, class Operation>
 void AddBenchmark(const KVContainer& kv_description, Generator generator,
                   Operation operation) {
+  constexpr size_t kRepetitionCount = 2;
+  constexpr double kMinTime = 0.02;
+
   auto bm_function = [generator, operation](benchmark::State& state) mutable {
     auto meta_object = generator();
     try {
@@ -73,8 +62,8 @@ void AddBenchmark(const KVContainer& kv_description, Generator generator,
 
   benchmark::RegisterBenchmark(
       internal::MakeBenchmarkName(kv_description).c_str(), bm_function)
-      ->MinTime(internal::benchmark_params.min_time)
-      ->Repetitions(internal::benchmark_params.repetition_count);
+      ->MinTime(kMinTime)
+      ->Repetitions(kRepetitionCount);
 }
 
 template <class KVDescriptionGenerator, class Generator, class Operation,
@@ -93,16 +82,6 @@ void AddGridBenchmark(KVDescriptionGenerator kv_description_generator,
       param_list...);
 }
 
-void Run(int& argc, char* argv[]) {
-  benchmark::Initialize(&argc, argv);
-
-  for (const auto& [key, value] : GetSystemInfo()) {
-    benchmark::AddCustomContext(key, value);
-  }
-
-  benchmark::RunSpecifiedBenchmarks();
-
-  benchmark::Shutdown();
-}
+void Run(int& argc, char* argv[]);
 
 }  // namespace grid_benchmark
