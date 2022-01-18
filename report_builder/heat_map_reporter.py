@@ -21,7 +21,7 @@ HTML = """<!DOCTYPE html>
 <body>
   <div class="container">
     <header>
-      <h1>ImgPrcBenchmark report</h1>
+      <h1>MetaImageMark report</h1>
     </header>
   </div>
   {context}
