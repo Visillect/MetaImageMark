@@ -1,11 +1,10 @@
 #pragma once
 
-#include <image_benchmark/macros.h>
 #include <opencv2/core.hpp>
 
 using Image = cv::Mat;
 
-BENCH_INLINE Image RandomImage(int scalar_type, int channel_count, int width,
+inline Image RandomImage(int scalar_type, int channel_count, int width,
                                int height) {
   cv::Mat image(height, width, CV_MAKE_TYPE(scalar_type, channel_count));
   std::vector<int> low(channel_count, 0);

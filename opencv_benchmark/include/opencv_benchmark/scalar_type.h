@@ -2,12 +2,11 @@
 
 #include <string>
 
-#include <image_benchmark/macros.h>
 #include <opencv_benchmark/image.h>
 
 using ScalarType = int;
 
-BENCH_INLINE std::string GetTypeString(ScalarType type) {
+inline std::string GetTypeString(ScalarType type) {
   switch (type) {
     case CV_8U:
       return "UINT8";

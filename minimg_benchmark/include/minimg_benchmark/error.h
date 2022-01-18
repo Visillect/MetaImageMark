@@ -3,7 +3,6 @@
 #include <stdexcept>
 #include <string>
 
-#include <image_benchmark/macros.h>
 #include <minbase/minresult.h>
 
 #define THROW_ON_ERROR(call)                                              \
@@ -14,7 +13,7 @@
     }                                                                     \
   } while (false)
 
-BENCH_INLINE std::string DescribeError(int error) {
+inline std::string DescribeError(int error) {
   switch (error) {
     case NO_ERRORS:
       return "NO_ERRORS";

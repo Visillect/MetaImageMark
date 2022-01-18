@@ -2,12 +2,11 @@
 
 #include <string>
 
-#include <image_benchmark/macros.h>
 #include <minbase/mintyp.h>
 
 using ScalarType = MinTyp;
 
-BENCH_INLINE std::string GetTypeString(ScalarType type) {
+inline std::string GetTypeString(ScalarType type) {
   switch (type) {
     case TYP_UINT1:
       return "UINT1";

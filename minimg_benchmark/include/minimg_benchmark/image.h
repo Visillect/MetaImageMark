@@ -6,8 +6,6 @@
 #include <minimgapi/minimgapi.h>
 #include <minimgapi/test/minrandom.hpp>
 
-#include <image_benchmark/macros.h>
-
 struct MinImgDeleter {
   void operator()(MinImg* image) {
     if (image != nullptr) {
@@ -19,8 +17,8 @@ struct MinImgDeleter {
 
 using Image = std::unique_ptr<MinImg, MinImgDeleter>;
 
-BENCH_INLINE Image RandomImage(MinTyp scalar_type, int channel_count, int width,
-                               int height) {
+inline Image RandomImage(MinTyp scalar_type, int channel_count, int width,
+                         int height) {
   Image image{new MinImg{}};
 
   THROW_ON_ERROR(NewMinImagePrototype(image.get(), width, height, channel_count,
