@@ -2,7 +2,7 @@
 
 A framework to benchmark Image Processing Libraries.
 
-Example of benchmark report.
+Example of benchmark [report](reports).
 
 ## Application areas
 
