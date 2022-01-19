@@ -9,7 +9,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 set(DOWNLOAD_DEPENDENCIES OFF CACHE BOOL "Allow cmake to download dependencies")
 set(ENABLE_TESTS OFF CACHE BOOL "Enable project tests")
 
-set(ENABLE_MINIMG_BENCHMARK OFF CACHE BOOL "Whether to enable the MinImg benchmark")
+set(ENABLE_MINIMG_BENCHMARK ON CACHE BOOL "Whether to enable the MinImg benchmark")
 set(ENABLE_OPENCV_BENCHMARK ON CACHE BOOL "Whether to enable the OpenCV benchmark")
 
 include(Dependencies)
