@@ -13,7 +13,6 @@ set(ENABLE_MINIMG_BENCHMARK ON CACHE BOOL "Whether to enable the MinImg benchmar
 set(ENABLE_OPENCV_BENCHMARK ON CACHE BOOL "Whether to enable the OpenCV benchmark")
 
 include(Dependencies)
-include(BuildTypes)
 
 if (${ENABLE_TESTS})
     include(GoogleTest)
