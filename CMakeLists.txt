@@ -12,9 +12,6 @@ set(ENABLE_TESTS OFF CACHE BOOL "Enable project tests")
 set(ENABLE_MINIMG_BENCHMARK OFF CACHE BOOL "Whether to enable the MinImg benchmark")
 set(ENABLE_OPENCV_BENCHMARK ON CACHE BOOL "Whether to enable the OpenCV benchmark")
 
-message(STATUS ${benchmark_DIR})
-message(STATUS ${OpenCV_DIR})
-
 include(Dependencies)
 include(BuildTypes)
 
