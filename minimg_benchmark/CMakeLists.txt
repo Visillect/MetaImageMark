@@ -7,8 +7,12 @@ function(ADD_MINIMG_CACHE NAME)
 endfunction()
 
 function(ADD_MINIMG_LIBRARY NAME TARGET RESULT)
-    if (NOT (EXISTS ${${NAME}_INCLUDE_DIR}) AND (EXISTS ${MINIMG_INCLUDE_DIR}))
-        set(${NAME}_INCLUDE_DIR ${MINIMG_INCLUDE_DIR})
+    if (NOT (EXISTS ${${NAME}_INCLUDE_DIR}) AND (EXISTS ${minimg_DIR}/include))
+        set(${NAME}_INCLUDE_DIR ${minimg_DIR}/include)
+    endif ()
+
+    if (NOT (EXISTS ${${NAME}_LIBRARY}) AND (EXISTS ${minimg_DIR}/lib/lib${TARGET}.so))
+        set(${NAME}_LIBRARY ${minimg_DIR}/lib/lib${TARGET}.so)
     endif ()
 
     if (NOT (EXISTS ${${NAME}_INCLUDE_DIR}) OR NOT (EXISTS ${${NAME}_LIBRARY}))
@@ -22,16 +26,15 @@ function(ADD_MINIMG_LIBRARY NAME TARGET RESULT)
     set_target_properties(${TARGET} PROPERTIES IMPORTED_LOCATION ${${NAME}_LIBRARY})
     set_target_properties(${TARGET} PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
             ${${NAME}_INCLUDE_DIR})
-
-    set(${RESULT} ON PARENT_SCOPE)
 endfunction()
 
-set(MINIMG_INCLUDE_DIR "" CACHE PATH "Path to MinImg include directory")
+set(minimg_DIR "" CACHE PATH "Path to MinImg install directory")
+
 ADD_MINIMG_CACHE(MINBASE)
 ADD_MINIMG_CACHE(MINIMGAPI)
 ADD_MINIMG_CACHE(MINIMGPRC)
 
-set(RESULT "")
+set(RESULT ON)
 ADD_MINIMG_LIBRARY(MINBASE minbase RESULT)
 ADD_MINIMG_LIBRARY(MINIMGAPI minimgapi RESULT)
 ADD_MINIMG_LIBRARY(MINIMGPRC minimgprc RESULT)
