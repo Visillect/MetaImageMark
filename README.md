@@ -46,7 +46,7 @@ Before starting, read the [section](#noise-suppression) about noise suppression.
 The executable files of the corresponding libraries will be located in the directory `bin.[BuildType]`. Run the
 desired benchmark using the command:
 
-`./bench_[library]_[operation] --behnmark_out=out.json`.
+`./bench_[library]_[operation] --benchmark_out=out.json`.
 
 ### Building a report
 
