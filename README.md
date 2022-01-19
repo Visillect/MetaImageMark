@@ -33,16 +33,10 @@ If OpenCV is not installed in your system, specify
 
 #### MinImg
 
-To run MinImg benchmarks you have to specify the following varibales:
+To run MinImg benchmarks you have to specify path to MinImg install directory:
 
 ```
--DENABLE_MINIMG_BENCHMARK=ON
--DMINBASE_INCLUDE_DIR=/path/to/include
--DMINIMGAPI_INCLUDE_DIR=/path/to/include
--DMINIMGPRC_INCLUDE_DIR=/path/to/include
--DMINBASE_LIBRARY=/path/to/libminbase.so
--DMINIMGAPI_LIBRARY=/path/to/libminimgapi.so
--DMINIMGPRC_LIBRARY=/path/to/libminimgprc.so
+-Dminimg_DIR=/path/to/minimg/install
 ```
 
 ### Running benchmarks
