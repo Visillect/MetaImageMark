@@ -43,10 +43,10 @@ To run MinImg benchmarks you have to specify path to MinImg install directory:
 
 Before starting, read the [section](#noise-suppression) about noise suppression.
 
-The executable files of the corresponding libraries will be located in the directory `library_benchmark`. Run the
+The executable files of the corresponding libraries will be located in the directory `bin.[BuildType]`. Run the
 desired benchmark using the command:
 
-`./bench_library_operation --behnmark_out=out.json`.
+`./bench_[library]_[operation] --behnmark_out=out.json`.
 
 ### Building a report
 
@@ -58,11 +58,11 @@ A python program is used to build the report. Usage example:
 
 | Operation           | Benchmark Name | MinImg | OpenCv | 
 |---------------------|----------------|:------:|:------:|
-| im = im1 + im2      | BinarySum      |   +    |    +   |
-| im = im1 - im2      | BinaryDiff     |   +    |    +   |
-| im = abs(im1 - im2) | BinaryADF      |   +    |    +   |
-| im = im1 * im2      | BinaryMult     |   +    |    +   |
-| im = im1 ^ im2      | BinaryPow      |   +    |    -   |
+| im = im1 + im2      | BinarySum      |   +    |   +    |
+| im = im1 - im2      | BinaryDiff     |   +    |   +    |
+| im = abs(im1 - im2) | BinaryADF      |   +    |   +    |
+| im = im1 * im2      | BinaryMult     |   +    |   +    |
+| im = im1 ^ im2      | BinaryPow      |   +    |   -    |
 
 | Operation    | MinImg | OpenCv | 
 |--------------|:------:|:------:|

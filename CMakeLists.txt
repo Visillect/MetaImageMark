@@ -14,6 +14,8 @@ set(ENABLE_OPENCV_BENCHMARK ON CACHE BOOL "Whether to enable the OpenCV benchmar
 
 include(Dependencies)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin.$<LOWER_CASE:$<CONFIG>>)
+
 if (${ENABLE_TESTS})
     include(GoogleTest)
 endif ()
